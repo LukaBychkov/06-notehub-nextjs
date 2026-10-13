@@ -3,6 +3,7 @@ import * as Yup from 'yup';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createNote } from '../../lib/api';
 import css from './NoteForm.module.css';
+import { Note } from '@/types/note';
 
 interface NoteFormProps {
   onSuccess: () => void;
@@ -15,7 +16,13 @@ const NoteFormSchema = Yup.object().shape({
   tag: Yup.string().oneOf(['Todo', 'Work', 'Personal', 'Meeting', 'Shopping']).required('Required'),
 });
 
-const initialValues = {
+interface FormValues {
+  title: string;
+  content: string;
+  tag: Note['tag']; // Строгий тип тега
+}
+
+const initialValues: FormValues = {
   title: '',
   content: '',
   tag: 'Todo',
